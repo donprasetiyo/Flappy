@@ -150,34 +150,3 @@ width: 100%;
   100%{background-position:0% -15.5%};
 } */
 
-#ground {
-     height: 100px;
-    width: 100%;
-    position: absolute;
-    animation: block 4s infinite linear;
-    /* -webkit-animation: block 1s infinite linear; */
-    background: rgb(0,36,2);
-    background: linear-gradient(90deg, rgba(0,36,2,1) 0%, rgba(31,95,23,1) 18%, rgba(60,190,102,1) 82%, rgba(0,255,52,1) 100%);
-    border: 1px solid #444;
-    bottom: 0;
-    left:-50px;
-}
-
-#before-ground{
-content: "";
-    height: 100px;
-    width: 0%;
-    position: absolute;
-    animation: moveBeforeGround 4s infinite linear;
-    /* -webkit-animation: block 1s infinite linear; */
-    background: rgb(0,36,2);
-    background: linear-gradient(90deg, rgba(0,36,2,1) 0%, rgba(31,95,23,1) 18%, rgba(60,190,102,1) 82%, rgba(0,255,52,1) 100%);
-    border: 1px solid #444;
-    bottom: 0;
-    left: 0;
-}
-
-@keyframes moveBeforeGround {
-  0%{width:100%};
-  100%{width:0%};
-}
