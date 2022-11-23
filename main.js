@@ -94,7 +94,7 @@ function gameIntervalManager(isResume) {
       getPipeHeight = holeBottom - holeTop;
       ScoreText.style.zIndex = 999999;
       if (cBottom >= (gameHeight - groundHeight) || ((blockLeft <= 203) && (blockLeft > 100) && ((cTop < holeTop) || (cBottom > holeBottom)))) {
-        
+
         isLose = true;
         hitSound.play();
         dieSound.play();
@@ -112,11 +112,11 @@ function gameIntervalManager(isResume) {
       }
     }, 10);
   }
-  if (isWelcomePressed === false){
+  if (isWelcomePressed === false) {
     block.style.animationPlayState = 'paused';
-        hole.style.animationPlayState = 'paused';
-        ground.style.animationPlayState = 'paused';
-        
+    hole.style.animationPlayState = 'paused';
+    ground.style.animationPlayState = 'paused';
+
   }
 
 }
@@ -150,20 +150,20 @@ document.querySelector('#app').addEventListener('keydown', jumpNow())
 document.onkeydown = checkKey;
 function checkKey(e) {
   e = e || window.event;
+
   if (e.keyCode == '38' && isPaused === false) {
     jumpNow();
-
-
   }
-  if (e.keyCode == '38' && isWelcomePressed === false){
+
+  if (e.keyCode == '38' && isWelcomePressed === false) {
     isWelcomePressed = true;
-     block.style.animationPlayState = 'running';
-        hole.style.animationPlayState = 'running';
-        ground.style.animationPlayState = 'running';
+    block.style.animationPlayState = 'running';
+    hole.style.animationPlayState = 'running';
+    ground.style.animationPlayState = 'running';
     gameIntervalManager(true);
     centerBox.style.display = "none";
   }
-  else if (e.keyCode == '32') {
+  else if (e.keyCode == '32' && isPaused === true) {
     resetGame();
   }
   else if (e.keyCode == '37') {
