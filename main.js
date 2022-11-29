@@ -7,7 +7,9 @@ document.querySelector('#app').innerHTML = `
     <div id="hole"></div>
     <img id="character"></img>
     <div id="center">
-    <div id="dialog">You Lose! Your score is. Press [SPACE] bar to restart the game.</div>
+    <div id="dialog">You Lose! Your score is. Click or press [SPACE] bar to restart the game.
+    
+    </div>
     
     </div>
     
@@ -47,7 +49,7 @@ let dieSound = new Audio('/assets/die.mp3');
 
 let isWelcomePressed = false;
 
-dialogBox.innerText = `Welcome to the game. Press A to jump and start playing.`;
+dialogBox.innerText = `Welcome to the game. Tap the screen or press Up-Arrow to jump and start playing.`;
 centerBox.style.display = "block";
 
 function holeIteration() {
@@ -67,7 +69,7 @@ function holeIteration() {
 hole.addEventListener('animationiteration', holeIteration);
 const gravityInterval = setInterval(() => {
   gravityWeight++;
-}, 100);
+}, 150);
 const rotationInterval = setInterval(() => {
   characterRotation = characterRotation + 2;
 }, 20);
@@ -93,12 +95,24 @@ function gameIntervalManager(isResume) {
       let holeBottom = holeTop + holeHeight;
       getPipeHeight = holeBottom - holeTop;
       ScoreText.style.zIndex = 999999;
-      if (cBottom >= (gameHeight - groundHeight) || ((blockLeft <= 203) && (blockLeft > 100) && ((cTop < holeTop) || (cBottom > holeBottom)))) {
+
+      let characterCurrentWidth = parseInt(window.getComputedStyle(character).getPropertyValue("width"));
+      let comparisonNumber = 100 - characterCurrentWidth;
+
+      if (cBottom >= (gameHeight - groundHeight) || ((blockLeft <= (203 - comparisonNumber)) && (blockLeft > (100 - comparisonNumber)) && ((cTop < holeTop) || (cBottom > holeBottom)))) {
 
         isLose = true;
         hitSound.play();
         dieSound.play();
-        dialogBox.innerText = `You Lose! Your score is ${counter}. Press [SPACE] bar to restart the game.`
+        dialogBox.innerText = `You Lose! Your score is ${counter}`
+        let resetButton = document.createElement('button');
+        resetButton.innerText = 'Restart Game';
+        dialogBox.appendChild(resetButton);
+        document.querySelector('#dialog > button').addEventListener('click', () => {
+          if (isPaused === true) {
+            resetGame();
+          }
+        })
         centerBox.style.display = "block";
         isPaused = true;
         block.style.animationPlayState = 'paused';
@@ -107,7 +121,7 @@ function gameIntervalManager(isResume) {
         hole.removeEventListener('animationiteration', null);
         clearInterval(gameInterval);
       }
-      if ((blockLeft <= 203) && (blockLeft > 100) && ((cTop > holeTop) || (cBottom < holeBottom))) {
+      if ((blockLeft <= (103 - comparisonNumber)) && (blockLeft > (0 - comparisonNumber)) && ((cTop > holeTop) || (cBottom < holeBottom))) {
         pointSound.play();
       }
     }, 10);
@@ -146,7 +160,7 @@ function jumpNow() {
     }, 10);
   }
 }
-document.querySelector('#app').addEventListener('keydown', jumpNow())
+document.querySelector('#app').addEventListener('keydown', jumpNow());
 document.onkeydown = checkKey;
 function checkKey(e) {
   e = e || window.event;
@@ -198,4 +212,22 @@ function resetGame() {
     ground.style.animationPlayState = 'running';
   }, 1);
 }
+
+document.querySelector('#app').addEventListener('click', () => {
+  if (isPaused === false) {
+    jumpNow();
+  }
+  if (isWelcomePressed === false) {
+    isWelcomePressed = true;
+    block.style.animationPlayState = 'running';
+    hole.style.animationPlayState = 'running';
+    ground.style.animationPlayState = 'running';
+    gameIntervalManager(true);
+    centerBox.style.display = "none";
+  }
+  // if (isPaused === true){
+  //   resetGame();
+  // }
+});
+
 

@@ -11,6 +11,8 @@
 
 body{
   overflow: hidden;
+  font-family: 'Luckiest Guy', cursive;
+  color:#555;
 }
 
 #game{
@@ -20,6 +22,27 @@ body{
     overflow: hidden;
     display: block;
     background: #7de6f1;
+}
+
+#dialog{
+  text-align:center;
+}
+
+#dialog > button{
+    display: block;
+    margin: 0 auto;
+    background: #a1fffb;
+    border: 0;
+    padding: 10px;
+    font-family: inherit;
+    color: #266b69;
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+#dialog > button:hover{
+  background:#8ae7e3;
 }
 
 #block{
@@ -105,8 +128,8 @@ left:100px;
       position: absolute;
     padding: 15px;
     margin: 10px;
-    border: 1px dashed #555;
     border-radius: 20%;
+    background: #50dad4;
 }
 
 #resume{
@@ -119,8 +142,12 @@ left:100px;
 
 
 #dialog{
- position: relative;
-     font-size: 25px;
+position: relative;
+    font-size: 25px;
+    background: #51dad4;
+    color: #534949;
+    padding: 25px;
+    border-radius: 20px;
 }
 
 #center{
@@ -150,3 +177,9 @@ width: 100%;
   100%{background-position:0% -15.5%};
 } */
 
+
+@media only screen and (max-width: 768px) {
+  #character{
+    width:50px;
+  }
+}
