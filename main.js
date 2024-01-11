@@ -1,4 +1,13 @@
 import './style.css';
+import bird from './assets/bird.png'
+import die from './assets/die.mp3'
+import flipped from './assets/flipped.png'
+import groundImg from './assets/ground.png'
+import hit from './assets/hit.mp3'
+import idle from './assets/idle.png'
+import point from './assets/point.mp3'
+import unflipped from './assets/unflipped.png'
+import wing from './assets/wing.mp3'
 
 document.querySelector('#app').innerHTML = `
 <div id="ScoreText"></div>
@@ -28,7 +37,7 @@ let ground = document.getElementById("ground");
 let getPipeHeight = 0;
 let isLose = false;
 ScoreText.innerText = "Score: " + 0;
-character.src = "/assets/idle.png";
+character.src = idle;
 let characterRotation = 0;
 let gameHeight = parseInt(window.getComputedStyle(game).getPropertyValue("height"));
 let gameWidth = parseInt(window.getComputedStyle(game).getPropertyValue("width"));
@@ -42,10 +51,10 @@ let jumping = 0;
 let counter = 0;
 let isPaused = false;
 let gravityWeight = 0;
-let wingSound = new Audio('/assets/wing.mp3');
-let pointSound = new Audio('/assets/point.mp3');
-let hitSound = new Audio('/assets/hit.mp3');
-let dieSound = new Audio('/assets/die.mp3');
+let wingSound = new Audio(wing);
+let pointSound = new Audio(point);
+let hitSound = new Audio(hit);
+let dieSound = new Audio(die);
 
 let isWelcomePressed = false;
 
@@ -91,7 +100,7 @@ function gameIntervalManager(isResume) {
 
           character.style.top = (characterTop + gravityWeight) + "px";
           character.style.transform = `rotate(${characterRotation}deg)`;
-          character.src = "/assets/unflipped.png";
+          character.src = unflipped;
 
         }
       }
@@ -181,7 +190,7 @@ function jumpNow() {
       if (characterTop > 6 && jumpCount < 15 && isWelcomePressed === true) {
 
         character.style.top = (characterTop - 8) + "px";
-        character.src = "/assets/flipped.png";
+        character.src = flipped;
 
       }
 
