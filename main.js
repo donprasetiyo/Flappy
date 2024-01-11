@@ -66,29 +66,42 @@ function holeIteration() {
   counter++;
   ScoreText.innerText = "Score: " + counter;
 }
+
 hole.addEventListener('animationiteration', holeIteration);
 const gravityInterval = setInterval(() => {
   gravityWeight++;
 }, 150);
+
 const rotationInterval = setInterval(() => {
   characterRotation = characterRotation + 2;
 }, 20);
+
 function gameIntervalManager(isResume) {
+
   if (isResume === true && isWelcomePressed === true) {
+
     const gameInterval = setInterval(() => {
+
       var characterTop = parseInt(window.getComputedStyle(character).getPropertyValue("top"));
       var cBottom = characterTop + parseInt(window.getComputedStyle(character).getPropertyValue("height"));
+
       if (jumping === 0) {
+
         if (cBottom <= (gameHeight - groundHeight)) {
+
           character.style.top = (characterTop + gravityWeight) + "px";
           character.style.transform = `rotate(${characterRotation}deg)`;
           character.src = "/assets/unflipped.png";
+
         }
       }
+
       let characterLastTop = characterTop;
+
       let blockLeft = parseInt(window.getComputedStyle(block).getPropertyValue("left"));
       let holeCSSTop = parseInt(window.getComputedStyle(hole).getPropertyValue("top"));
       let holeHeight = parseInt(window.getComputedStyle(hole).getPropertyValue("height"));
+
       let cTop = characterLastTop;
       let lastBlockPosition = block.getBoundingClientRect().left;
       let holeTop = holeCSSTop + gameHeight;
@@ -104,15 +117,17 @@ function gameIntervalManager(isResume) {
         isLose = true;
         hitSound.play();
         dieSound.play();
-        dialogBox.innerText = `You Lose! Your score is ${counter}`
+        dialogBox.innerText = `You Lose! Your score is ${counter}`;
         let resetButton = document.createElement('button');
         resetButton.innerText = 'Restart Game';
         dialogBox.appendChild(resetButton);
+
         document.querySelector('#dialog > button').addEventListener('click', () => {
           if (isPaused === true) {
             resetGame();
           }
         })
+
         centerBox.style.display = "block";
         isPaused = true;
         block.style.animationPlayState = 'paused';
@@ -120,48 +135,72 @@ function gameIntervalManager(isResume) {
         ground.style.animationPlayState = 'paused';
         hole.removeEventListener('animationiteration', null);
         clearInterval(gameInterval);
+
       }
+
       if ((blockLeft <= (103 - comparisonNumber)) && (blockLeft > (0 - comparisonNumber)) && ((cTop > holeTop) || (cBottom < holeBottom))) {
+
         pointSound.play();
+
       }
+
     }, 10);
   }
+
   if (isWelcomePressed === false) {
+
     block.style.animationPlayState = 'paused';
     hole.style.animationPlayState = 'paused';
     ground.style.animationPlayState = 'paused';
 
   }
-
 }
+
 gameIntervalManager(true);
+
 function jumpNow() {
+
   if (isLose === false) {
+
     wingSound.currentTime = 0;
     wingSound.play();
     gravityWeight = 0;
     characterRotation = -45;
+
     const jumpRotation = setInterval(() => {
     }, 100);
+
     jumping = 1;
     let jumpCount = 0;
+
     let jumpInterval = setInterval(() => {
       jumpCount++;
+
       var characterTop = parseInt(window.getComputedStyle(character).getPropertyValue("top"));
+
       if (characterTop > 6 && jumpCount < 15 && isWelcomePressed === true) {
+
         character.style.top = (characterTop - 8) + "px";
         character.src = "/assets/flipped.png";
+
       }
+
       if (jumpCount > 20) {
+
         clearInterval(jumpInterval);
         jumping = 0;
         jumpCount = 0;
+
       }
+
     }, 10);
+
   }
 }
+
 document.querySelector('#app').addEventListener('keydown', jumpNow());
 document.onkeydown = checkKey;
+
 function checkKey(e) {
   e = e || window.event;
 
@@ -177,14 +216,18 @@ function checkKey(e) {
     gameIntervalManager(true);
     centerBox.style.display = "none";
   }
+
   else if (e.keyCode == '32' && isPaused === true) {
     resetGame();
   }
+
   else if (e.keyCode == '37') {
   }
+
   else if (e.keyCode == '39') {
   }
 }
+
 function resetGame() {
   gravityWeight = 0;
   isLose = false;
